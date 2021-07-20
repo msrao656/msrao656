@@ -1,0 +1,1111 @@
+<!DOCTYPE html>
+<!-- saved from url=(0049)http://dreamvise.com/luna/src/luna/dashboard.html -->
+<html dir="ltr" lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Luna, video monitoring, camera surveillance, cloud solution">
+    <meta name="description" content="Luna is a powerful monitoring system.">
+    <meta name="robots" content="noindex,nofollow">
+    <title>Luna</title>
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="http://dreamvise.com/luna/src/assets/images/favicon.png">
+    <link rel="stylesheet" href="./Luna_files/apexcharts.css">
+    <link href="./Luna_files/css-chart.css" rel="stylesheet">
+    <!-- Vector CSS -->
+    <link href="./Luna_files/jquery-jvectormap.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="./Luna_files/style.min.css" rel="stylesheet">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+<style type="text/css">.apexcharts-canvas {
+  position: relative;
+  user-select: none;
+  /* cannot give overflow: hidden as it will crop tooltips which overflow outside chart area */
+}
+
+
+/* scrollbar is not visible by default for legend, hence forcing the visibility */
+.apexcharts-canvas ::-webkit-scrollbar {
+  -webkit-appearance: none;
+  width: 6px;
+}
+
+.apexcharts-canvas ::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background-color: rgba(0, 0, 0, .5);
+  box-shadow: 0 0 1px rgba(255, 255, 255, .5);
+  -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, .5);
+}
+
+
+.apexcharts-inner {
+  position: relative;
+}
+
+.apexcharts-text tspan {
+  font-family: inherit;
+}
+
+.legend-mouseover-inactive {
+  transition: 0.15s ease all;
+  opacity: 0.20;
+}
+
+.apexcharts-series-collapsed {
+  opacity: 0;
+}
+
+.apexcharts-tooltip {
+  border-radius: 5px;
+  box-shadow: 2px 2px 6px -4px #999;
+  cursor: default;
+  font-size: 14px;
+  left: 62px;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  top: 20px;
+  overflow: hidden;
+  white-space: nowrap;
+  z-index: 12;
+  transition: 0.15s ease all;
+}
+
+.apexcharts-tooltip.apexcharts-active {
+  opacity: 1;
+  transition: 0.15s ease all;
+}
+
+.apexcharts-tooltip.apexcharts-theme-light {
+  border: 1px solid #e3e3e3;
+  background: rgba(255, 255, 255, 0.96);
+}
+
+.apexcharts-tooltip.apexcharts-theme-dark {
+  color: #fff;
+  background: rgba(30, 30, 30, 0.8);
+}
+
+.apexcharts-tooltip * {
+  font-family: inherit;
+}
+
+
+.apexcharts-tooltip-title {
+  padding: 6px;
+  font-size: 15px;
+  margin-bottom: 4px;
+}
+
+.apexcharts-tooltip.apexcharts-theme-light .apexcharts-tooltip-title {
+  background: #ECEFF1;
+  border-bottom: 1px solid #ddd;
+}
+
+.apexcharts-tooltip.apexcharts-theme-dark .apexcharts-tooltip-title {
+  background: rgba(0, 0, 0, 0.7);
+  border-bottom: 1px solid #333;
+}
+
+.apexcharts-tooltip-text-value,
+.apexcharts-tooltip-text-z-value {
+  display: inline-block;
+  font-weight: 600;
+  margin-left: 5px;
+}
+
+.apexcharts-tooltip-text-z-label:empty,
+.apexcharts-tooltip-text-z-value:empty {
+  display: none;
+}
+
+.apexcharts-tooltip-text-value,
+.apexcharts-tooltip-text-z-value {
+  font-weight: 600;
+}
+
+.apexcharts-tooltip-marker {
+  width: 12px;
+  height: 12px;
+  position: relative;
+  top: 0px;
+  margin-right: 10px;
+  border-radius: 50%;
+}
+
+.apexcharts-tooltip-series-group {
+  padding: 0 10px;
+  display: none;
+  text-align: left;
+  justify-content: left;
+  align-items: center;
+}
+
+.apexcharts-tooltip-series-group.apexcharts-active .apexcharts-tooltip-marker {
+  opacity: 1;
+}
+
+.apexcharts-tooltip-series-group.apexcharts-active,
+.apexcharts-tooltip-series-group:last-child {
+  padding-bottom: 4px;
+}
+
+.apexcharts-tooltip-series-group-hidden {
+  opacity: 0;
+  height: 0;
+  line-height: 0;
+  padding: 0 !important;
+}
+
+.apexcharts-tooltip-y-group {
+  padding: 6px 0 5px;
+}
+
+.apexcharts-tooltip-candlestick {
+  padding: 4px 8px;
+}
+
+.apexcharts-tooltip-candlestick>div {
+  margin: 4px 0;
+}
+
+.apexcharts-tooltip-candlestick span.value {
+  font-weight: bold;
+}
+
+.apexcharts-tooltip-rangebar {
+  padding: 5px 8px;
+}
+
+.apexcharts-tooltip-rangebar .category {
+  font-weight: 600;
+  color: #777;
+}
+
+.apexcharts-tooltip-rangebar .series-name {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.apexcharts-xaxistooltip {
+  opacity: 0;
+  padding: 9px 10px;
+  pointer-events: none;
+  color: #373d3f;
+  font-size: 13px;
+  text-align: center;
+  border-radius: 2px;
+  position: absolute;
+  z-index: 10;
+  background: #ECEFF1;
+  border: 1px solid #90A4AE;
+  transition: 0.15s ease all;
+}
+
+.apexcharts-xaxistooltip.apexcharts-theme-dark {
+  background: rgba(0, 0, 0, 0.7);
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  color: #fff;
+}
+
+.apexcharts-xaxistooltip:after,
+.apexcharts-xaxistooltip:before {
+  left: 50%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+}
+
+.apexcharts-xaxistooltip:after {
+  border-color: rgba(236, 239, 241, 0);
+  border-width: 6px;
+  margin-left: -6px;
+}
+
+.apexcharts-xaxistooltip:before {
+  border-color: rgba(144, 164, 174, 0);
+  border-width: 7px;
+  margin-left: -7px;
+}
+
+.apexcharts-xaxistooltip-bottom:after,
+.apexcharts-xaxistooltip-bottom:before {
+  bottom: 100%;
+}
+
+.apexcharts-xaxistooltip-top:after,
+.apexcharts-xaxistooltip-top:before {
+  top: 100%;
+}
+
+.apexcharts-xaxistooltip-bottom:after {
+  border-bottom-color: #ECEFF1;
+}
+
+.apexcharts-xaxistooltip-bottom:before {
+  border-bottom-color: #90A4AE;
+}
+
+.apexcharts-xaxistooltip-bottom.apexcharts-theme-dark:after {
+  border-bottom-color: rgba(0, 0, 0, 0.5);
+}
+
+.apexcharts-xaxistooltip-bottom.apexcharts-theme-dark:before {
+  border-bottom-color: rgba(0, 0, 0, 0.5);
+}
+
+.apexcharts-xaxistooltip-top:after {
+  border-top-color: #ECEFF1
+}
+
+.apexcharts-xaxistooltip-top:before {
+  border-top-color: #90A4AE;
+}
+
+.apexcharts-xaxistooltip-top.apexcharts-theme-dark:after {
+  border-top-color: rgba(0, 0, 0, 0.5);
+}
+
+.apexcharts-xaxistooltip-top.apexcharts-theme-dark:before {
+  border-top-color: rgba(0, 0, 0, 0.5);
+}
+
+.apexcharts-xaxistooltip.apexcharts-active {
+  opacity: 1;
+  transition: 0.15s ease all;
+}
+
+.apexcharts-yaxistooltip {
+  opacity: 0;
+  padding: 4px 10px;
+  pointer-events: none;
+  color: #373d3f;
+  font-size: 13px;
+  text-align: center;
+  border-radius: 2px;
+  position: absolute;
+  z-index: 10;
+  background: #ECEFF1;
+  border: 1px solid #90A4AE;
+}
+
+.apexcharts-yaxistooltip.apexcharts-theme-dark {
+  background: rgba(0, 0, 0, 0.7);
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  color: #fff;
+}
+
+.apexcharts-yaxistooltip:after,
+.apexcharts-yaxistooltip:before {
+  top: 50%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+}
+
+.apexcharts-yaxistooltip:after {
+  border-color: rgba(236, 239, 241, 0);
+  border-width: 6px;
+  margin-top: -6px;
+}
+
+.apexcharts-yaxistooltip:before {
+  border-color: rgba(144, 164, 174, 0);
+  border-width: 7px;
+  margin-top: -7px;
+}
+
+.apexcharts-yaxistooltip-left:after,
+.apexcharts-yaxistooltip-left:before {
+  left: 100%;
+}
+
+.apexcharts-yaxistooltip-right:after,
+.apexcharts-yaxistooltip-right:before {
+  right: 100%;
+}
+
+.apexcharts-yaxistooltip-left:after {
+  border-left-color: #ECEFF1;
+}
+
+.apexcharts-yaxistooltip-left:before {
+  border-left-color: #90A4AE;
+}
+
+.apexcharts-yaxistooltip-left.apexcharts-theme-dark:after {
+  border-left-color: rgba(0, 0, 0, 0.5);
+}
+
+.apexcharts-yaxistooltip-left.apexcharts-theme-dark:before {
+  border-left-color: rgba(0, 0, 0, 0.5);
+}
+
+.apexcharts-yaxistooltip-right:after {
+  border-right-color: #ECEFF1;
+}
+
+.apexcharts-yaxistooltip-right:before {
+  border-right-color: #90A4AE;
+}
+
+.apexcharts-yaxistooltip-right.apexcharts-theme-dark:after {
+  border-right-color: rgba(0, 0, 0, 0.5);
+}
+
+.apexcharts-yaxistooltip-right.apexcharts-theme-dark:before {
+  border-right-color: rgba(0, 0, 0, 0.5);
+}
+
+.apexcharts-yaxistooltip.apexcharts-active {
+  opacity: 1;
+}
+
+.apexcharts-yaxistooltip-hidden {
+  display: none;
+}
+
+.apexcharts-xcrosshairs,
+.apexcharts-ycrosshairs {
+  pointer-events: none;
+  opacity: 0;
+  transition: 0.15s ease all;
+}
+
+.apexcharts-xcrosshairs.apexcharts-active,
+.apexcharts-ycrosshairs.apexcharts-active {
+  opacity: 1;
+  transition: 0.15s ease all;
+}
+
+.apexcharts-ycrosshairs-hidden {
+  opacity: 0;
+}
+
+.apexcharts-selection-rect {
+  cursor: move;
+}
+
+.svg_select_boundingRect, .svg_select_points_rot {
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+}
+.apexcharts-selection-rect + g .svg_select_boundingRect,
+.apexcharts-selection-rect + g .svg_select_points_rot {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.apexcharts-selection-rect + g .svg_select_points_l,
+.apexcharts-selection-rect + g .svg_select_points_r {
+  cursor: ew-resize;
+  opacity: 1;
+  visibility: visible;
+}
+
+.svg_select_points {
+  fill: #efefef;
+  stroke: #333;
+  rx: 2;
+}
+
+.apexcharts-canvas.apexcharts-zoomable .hovering-zoom {
+  cursor: crosshair
+}
+
+.apexcharts-canvas.apexcharts-zoomable .hovering-pan {
+  cursor: move
+}
+
+.apexcharts-zoom-icon,
+.apexcharts-zoomin-icon,
+.apexcharts-zoomout-icon,
+.apexcharts-reset-icon,
+.apexcharts-pan-icon,
+.apexcharts-selection-icon,
+.apexcharts-menu-icon,
+.apexcharts-toolbar-custom-icon {
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  line-height: 24px;
+  color: #6E8192;
+  text-align: center;
+}
+
+.apexcharts-zoom-icon svg,
+.apexcharts-zoomin-icon svg,
+.apexcharts-zoomout-icon svg,
+.apexcharts-reset-icon svg,
+.apexcharts-menu-icon svg {
+  fill: #6E8192;
+}
+
+.apexcharts-selection-icon svg {
+  fill: #444;
+  transform: scale(0.76)
+}
+
+.apexcharts-theme-dark .apexcharts-zoom-icon svg,
+.apexcharts-theme-dark .apexcharts-zoomin-icon svg,
+.apexcharts-theme-dark .apexcharts-zoomout-icon svg,
+.apexcharts-theme-dark .apexcharts-reset-icon svg,
+.apexcharts-theme-dark .apexcharts-pan-icon svg,
+.apexcharts-theme-dark .apexcharts-selection-icon svg,
+.apexcharts-theme-dark .apexcharts-menu-icon svg,
+.apexcharts-theme-dark .apexcharts-toolbar-custom-icon svg {
+  fill: #f3f4f5;
+}
+
+.apexcharts-canvas .apexcharts-zoom-icon.apexcharts-selected svg,
+.apexcharts-canvas .apexcharts-selection-icon.apexcharts-selected svg,
+.apexcharts-canvas .apexcharts-reset-zoom-icon.apexcharts-selected svg {
+  fill: #008FFB;
+}
+
+.apexcharts-theme-light .apexcharts-selection-icon:not(.apexcharts-selected):hover svg,
+.apexcharts-theme-light .apexcharts-zoom-icon:not(.apexcharts-selected):hover svg,
+.apexcharts-theme-light .apexcharts-zoomin-icon:hover svg,
+.apexcharts-theme-light .apexcharts-zoomout-icon:hover svg,
+.apexcharts-theme-light .apexcharts-reset-icon:hover svg,
+.apexcharts-theme-light .apexcharts-menu-icon:hover svg {
+  fill: #333;
+}
+
+.apexcharts-selection-icon,
+.apexcharts-menu-icon {
+  position: relative;
+}
+
+.apexcharts-reset-icon {
+  margin-left: 5px;
+}
+
+.apexcharts-zoom-icon,
+.apexcharts-reset-icon,
+.apexcharts-menu-icon {
+  transform: scale(0.85);
+}
+
+.apexcharts-zoomin-icon,
+.apexcharts-zoomout-icon {
+  transform: scale(0.7)
+}
+
+.apexcharts-zoomout-icon {
+  margin-right: 3px;
+}
+
+.apexcharts-pan-icon {
+  transform: scale(0.62);
+  position: relative;
+  left: 1px;
+  top: 0px;
+}
+
+.apexcharts-pan-icon svg {
+  fill: #fff;
+  stroke: #6E8192;
+  stroke-width: 2;
+}
+
+.apexcharts-pan-icon.apexcharts-selected svg {
+  stroke: #008FFB;
+}
+
+.apexcharts-pan-icon:not(.apexcharts-selected):hover svg {
+  stroke: #333;
+}
+
+.apexcharts-toolbar {
+  position: absolute;
+  z-index: 11;
+  max-width: 176px;
+  text-align: right;
+  border-radius: 3px;
+  padding: 0px 6px 2px 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.apexcharts-menu {
+  background: #fff;
+  position: absolute;
+  top: 100%;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  padding: 3px;
+  right: 10px;
+  opacity: 0;
+  min-width: 110px;
+  transition: 0.15s ease all;
+  pointer-events: none;
+}
+
+.apexcharts-menu.apexcharts-menu-open {
+  opacity: 1;
+  pointer-events: all;
+  transition: 0.15s ease all;
+}
+
+.apexcharts-menu-item {
+  padding: 6px 7px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.apexcharts-theme-light .apexcharts-menu-item:hover {
+  background: #eee;
+}
+
+.apexcharts-theme-dark .apexcharts-menu {
+  background: rgba(0, 0, 0, 0.7);
+  color: #fff;
+}
+
+@media screen and (min-width: 768px) {
+  .apexcharts-canvas:hover .apexcharts-toolbar {
+    opacity: 1;
+  }
+}
+
+.apexcharts-datalabel.apexcharts-element-hidden {
+  opacity: 0;
+}
+
+.apexcharts-pie-label,
+.apexcharts-datalabels,
+.apexcharts-datalabel,
+.apexcharts-datalabel-label,
+.apexcharts-datalabel-value {
+  cursor: default;
+  pointer-events: none;
+}
+
+.apexcharts-pie-label-delay {
+  opacity: 0;
+  animation-name: opaque;
+  animation-duration: 0.3s;
+  animation-fill-mode: forwards;
+  animation-timing-function: ease;
+}
+
+.apexcharts-canvas .apexcharts-element-hidden {
+  opacity: 0;
+}
+
+.apexcharts-hide .apexcharts-series-points {
+  opacity: 0;
+}
+
+.apexcharts-gridline,
+.apexcharts-annotation-rect,
+.apexcharts-tooltip .apexcharts-marker,
+.apexcharts-area-series .apexcharts-area,
+.apexcharts-line,
+.apexcharts-zoom-rect,
+.apexcharts-toolbar svg,
+.apexcharts-area-series .apexcharts-series-markers .apexcharts-marker.no-pointer-events,
+.apexcharts-line-series .apexcharts-series-markers .apexcharts-marker.no-pointer-events,
+.apexcharts-radar-series path,
+.apexcharts-radar-series polygon {
+  pointer-events: none;
+}
+
+
+/* markers */
+
+.apexcharts-marker {
+  transition: 0.15s ease all;
+}
+
+@keyframes opaque {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+
+/* Resize generated styles */
+
+@keyframes resizeanim {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.resize-triggers {
+  animation: 1ms resizeanim;
+  visibility: hidden;
+  opacity: 0;
+}
+
+.resize-triggers,
+.resize-triggers>div,
+.contract-trigger:before {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+.resize-triggers>div {
+  background: #eee;
+  overflow: auto;
+}
+
+.contract-trigger:before {
+  width: 200%;
+  height: 200%;
+}</style><style type="text/css">.jqstooltip { position: absolute;left: 0px;top: 0px;visibility: hidden;background: rgb(0, 0, 0) transparent;background-color: rgba(0,0,0,0.6);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000);-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000)";color: white;font: 10px arial, san serif;text-align: left;white-space: nowrap;padding: 5px;border: 1px solid white;z-index: 10000;}.jqsfield { color: white;font: 10px arial, san serif;text-align: left;}</style></head>
+
+<body>
+    <!-- ============================================================== -->
+    <!-- Preloader - style you can find in spinners.css -->
+    <!-- ============================================================== -->
+    <div class="preloader" style="display: none;">
+        <svg class="tea lds-ripple" width="37" height="48" viewBox="0 0 37 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M27.0819 17H3.02508C1.91076 17 1.01376 17.9059 1.0485 19.0197C1.15761 22.5177 1.49703 29.7374 2.5 34C4.07125 40.6778 7.18553 44.8868 8.44856 46.3845C8.79051 46.79 9.29799 47 9.82843 47H20.0218C20.639 47 21.2193 46.7159 21.5659 46.2052C22.6765 44.5687 25.2312 40.4282 27.5 34C28.9757 29.8188 29.084 22.4043 29.0441 18.9156C29.0319 17.8436 28.1539 17 27.0819 17Z" stroke="#1e88e5" stroke-width="2"></path>
+          <path d="M29 23.5C29 23.5 34.5 20.5 35.5 25.4999C36.0986 28.4926 34.2033 31.5383 32 32.8713C29.4555 34.4108 28 34 28 34" stroke="#1e88e5" stroke-width="2"></path>
+          <path id="teabag" fill="#1e88e5" fill-rule="evenodd" clip-rule="evenodd" d="M16 25V17H14V25H12C10.3431 25 9 26.3431 9 28V34C9 35.6569 10.3431 37 12 37H18C19.6569 37 21 35.6569 21 34V28C21 26.3431 19.6569 25 18 25H16ZM11 28C11 27.4477 11.4477 27 12 27H18C18.5523 27 19 27.4477 19 28V34C19 34.5523 18.5523 35 18 35H12C11.4477 35 11 34.5523 11 34V28Z"></path>
+          <path id="steamL" d="M17 1C17 1 17 4.5 14 6.5C11 8.5 11 12 11 12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="#1e88e5"></path>
+          <path id="steamR" d="M21 6C21 6 21 8.22727 19 9.5C17 10.7727 17 13 17 13" stroke="#1e88e5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+    </div>
+    <!-- ============================================================== -->
+    <!-- Main wrapper - style you can find in pages.scss -->
+    <!-- ============================================================== -->
+    <div id="main-wrapper" data-theme="light" data-layout="vertical" data-navbarbg="skin1" data-sidebartype="full" data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
+        <!-- ============================================================== -->
+        <!-- Topbar header - style you can find in pages.scss -->
+        <!-- ============================================================== -->
+        <header class="topbar" data-navbarbg="skin1">
+            <nav class="navbar top-navbar navbar-expand-md navbar-dark">
+                <div class="navbar-header" data-logobg="skin1">
+                    <!-- This is for the sidebar toggle which is visible on mobile only -->
+                    <a class="nav-toggler waves-effect waves-light d-block d-md-none" href="javascript:void(0)"><i class="ti-menu ti-close"></i></a>
+                    <!-- ============================================================== -->
+                    <!-- Logo -->
+                    <!-- ============================================================== -->
+                    <a class="navbar-brand" href="http://dreamvise.com/luna/src/luna/index.html">
+                        <!-- Logo icon -->
+                        <b class="logo-icon">
+                            <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
+                            <!-- Dark Logo icon -->
+                            <img src="./Luna_files/logo-icon.png" alt="homepage" class="dark-logo">
+                            <!-- Light Logo icon -->
+                            <img src="./Luna_files/logo-light-icon.png" alt="homepage" class="light-logo">
+                        </b>
+                        <!--End Logo icon -->
+                        <!-- Logo text -->
+                        <span class="logo-text">
+                            <!-- dark Logo text -->
+                            <img src="./Luna_files/logo-text.png" alt="homepage" class="dark-logo">
+                            <!-- Light Logo text -->
+                            <img src="./Luna_files/logo-light-text.png" class="light-logo" alt="homepage">
+                        </span>
+                    </a>
+                    <!-- ============================================================== -->
+                    <!-- End Logo -->
+                    <!-- ============================================================== -->
+                    <!-- ============================================================== -->
+                    <!-- Toggle which is visible on mobile only -->
+                    <!-- ============================================================== -->
+                    <a class="topbartoggler d-block d-md-none waves-effect waves-light" href="javascript:void(0)" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><i class="ti-more"></i></a>
+                </div>
+                <!-- ============================================================== -->
+                <!-- End Logo -->
+                <!-- ============================================================== -->
+                <div class="navbar-collapse collapse" id="navbarSupportedContent" data-navbarbg="skin1">
+                    <!-- ============================================================== -->
+                    <!-- toggle and nav items -->
+                    <!-- ============================================================== -->
+                    <ul class="navbar-nav me-auto">
+                        <!-- This is  -->
+                        <li class="nav-item"> <a class="nav-link sidebartoggler d-none d-md-block waves-effect waves-dark" href="javascript:void(0)"><i class="ti-menu"></i></a> </li>
+                        <!-- ============================================================== -->
+                        <!-- Search -->
+                        <!-- ============================================================== -->
+                        <li class="nav-item d-none d-md-block search-box"> <a class="nav-link d-none d-md-block waves-effect waves-dark" href="javascript:void(0)"><i class="ti-search"></i></a>
+                            <form class="app-search">
+                                <input type="text" class="form-control" placeholder="Search &amp; enter"> 
+                                <a class="srh-btn"><i class="ti-close"></i></a> 
+
+                                <a class="form-control text-center" href="http://dreamvise.com/luna/src/luna/search.html">
+                                    <i class="ti-search"></i> Search by image</a>
+                            </form>
+                            
+                        </li>
+                    </ul>
+                    <!-- ============================================================== -->
+                    <!-- Right side toggle and nav items -->
+                    <!-- ============================================================== -->
+                    <ul class="navbar-nav">
+                        <!-- ============================================================== -->
+                        <!-- Comment -->
+                        <!-- ============================================================== -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="http://dreamvise.com/luna/src/luna/dashboard.html#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="mdi mdi-bell"></i>
+                                <div class="notify"> <span class="heartbit"></span> <span class="point"></span> </div>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end mailbox dropdown-menu-animate-up">
+                                <ul class="list-style-none">
+                                    <li>
+                                        <div class="border-bottom rounded-top py-3 px-4">
+                                            <div class="mb-0 font-weight-medium fs-4">Notifications</div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="message-center notifications position-relative ps-container ps-theme-default" style="height:230px;" data-ps-id="9a18d87e-95d3-a27d-a334-744b22124353">
+                                            <!-- Message -->
+                                            <a href="javascript:void(0)" class="message-item d-flex align-items-center border-bottom px-3 py-2">
+                                                <span class="btn btn-light-danger text-danger btn-circle">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link feather-sm fill-white"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+                                                </span>
+                                                <div class="w-75 d-inline-block v-middle ps-3">
+                                                    <h5 class="message-title mb-0 mt-1 fs-3 fw-bold">Luanch Admin</h5> <span class="fs-2 text-nowrap d-block time text-truncate fw-normal text-muted mt-1">Just see
+                                                        the my new admin!</span> <span class="fs-2 text-nowrap d-block subtext text-muted">9:30 AM</span>
+                                                </div>
+                                            </a>
+                                            <!-- Message -->
+                                            <a href="javascript:void(0)" class="message-item d-flex align-items-center border-bottom px-3 py-2">
+                                                <span class="btn btn-light-success text-success btn-circle">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar feather-sm fill-white"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                                                </span>
+                                                <div class="w-75 d-inline-block v-middle ps-3">
+                                                    <h5 class="message-title mb-0 mt-1 fs-3 fw-bold">Event today</h5> <span class="fs-2 text-nowrap d-block time text-truncate fw-normal text-muted mt-1">Just a
+                                                        reminder that you have event</span> <span class="fs-2 text-nowrap d-block subtext text-muted">9:10 AM</span>
+                                                </div>
+                                            </a>
+                                            <!-- Message -->
+                                            <a href="javascript:void(0)" class="message-item d-flex align-items-center border-bottom px-3 py-2">
+                                                <span class="btn btn-light-info text-info btn-circle">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-settings feather-sm fill-white"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                                                </span>
+                                                <div class="w-75 d-inline-block v-middle ps-3">
+                                                    <h5 class="message-title mb-0 mt-1 fs-3 fw-bold">Settings</h5> <span class="fs-2 text-nowrap d-block time text-truncate fw-normal text-muted mt-1">You can
+                                                        customize this template as you want</span> <span class="fs-2 text-nowrap d-block subtext text-muted">9:08 AM</span>
+                                                </div>
+                                            </a>
+                                            <!-- Message -->
+                                            <a href="javascript:void(0)" class="message-item d-flex align-items-center border-bottom px-3 py-2">
+                                                <span class="btn btn-light-primary text-primary btn-circle">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users feather-sm fill-white"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                                                </span>
+                                                <div class="w-75 d-inline-block v-middle ps-3">
+                                                    <h5 class="message-title mb-0 mt-1 fs-3 fw-bold">Pavan kumar</h5> <span class="fs-2 text-nowrap d-block time text-truncate fw-normal text-muted mt-1">Just see
+                                                        the my admin!</span> <span class="fs-2 text-nowrap d-block subtext text-muted">9:02 AM</span>
+                                                </div>
+                                            </a>
+                                        <div class="ps-scrollbar-x-rail" style="left: 0px; bottom: 0px;"><div class="ps-scrollbar-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps-scrollbar-y-rail" style="top: 0px; right: 3px;"><div class="ps-scrollbar-y" tabindex="0" style="top: 0px; height: 0px;"></div></div></div>
+                                    </li>
+                                    <li>
+                                        <a class="nav-link border-top text-center text-dark pt-3" href="javascript:void(0);"> <strong>Check all notifications</strong> <i class="fa fa-angle-right"></i> </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <!-- ============================================================== -->
+                        <!-- End Comment -->
+                        <!-- ============================================================== -->
+                        <!-- ============================================================== -->
+                        <!-- Profile -->
+                        <!-- ============================================================== -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="http://dreamvise.com/luna/src/luna/dashboard.html#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Ojiambo Okumu
+                                <img src="./Luna_files/1.jpg" alt="user" width="30" class="profile-pic rounded-circle">
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end user-dd animated flipInY">
+                                <div class="d-flex no-block align-items-center p-3 bg-info text-white mb-2">
+                                    <div class=""><img src="./Luna_files/1.jpg" alt="user" class="rounded-circle" width="60"></div>
+                                    <div class="ms-2">
+                                        <h4 class="mb-0 text-white">Ojiambo Okumu</h4>
+                                        <p class=" mb-0">ojiambokumu@gmail.com</p>
+                                    </div>
+                                </div>
+                                <a class="dropdown-item" href="http://dreamvise.com/luna/src/luna/dashboard.html#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user feather-sm text-info me-1 ms-1"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> My
+                                    Profile</a>
+                                <a class="dropdown-item" href="http://dreamvise.com/luna/src/luna/dashboard.html#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-credit-card feather-sm text-info me-1 ms-1"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+                                    My Balance</a>
+                                <a class="dropdown-item" href="http://dreamvise.com/luna/src/luna/dashboard.html#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-mail feather-sm text-success me-1 ms-1"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                                    Inbox</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="http://dreamvise.com/luna/src/luna/dashboard.html#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-settings feather-sm text-warning me-1 ms-1"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                                    Account Setting</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="http://dreamvise.com/luna/src/luna/dashboard.html#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-log-out feather-sm text-danger me-1 ms-1"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg> Logout</a>
+                                <div class="dropdown-divider"></div>
+                                <div class="pl-4 p-2"><a href="http://dreamvise.com/luna/src/luna/dashboard.html#" class="btn d-block w-100 btn-info rounded-pill">View Profile</a></div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <!-- ============================================================== -->
+        <!-- End Topbar header -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        <aside class="left-sidebar" data-sidebarbg="skin6">
+            <!-- Sidebar scroll-->
+            <div class="scroll-sidebar ps-container ps-theme-default ps-active-y" data-ps-id="5c262cba-d7a6-f33e-5ca8-cc0d5e701534">
+                <!-- Sidebar navigation-->
+                <nav class="sidebar-nav">
+                    <ul id="sidebarnav" class="in">
+                        <li class="sidebar-item selected"> <a class="sidebar-link waves-effect waves-dark sidebar-link active" href="http://dreamvise.com/luna/src/luna/dashboard.html" aria-expanded="false"><i class="mdi mdi-gauge"></i><span class="hide-menu">Dashboard</span></a></li>
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="http://dreamvise.com/luna/src/luna/users.html" aria-expanded="false"><i class="mdi mdi-account-multiple"></i><span class="hide-menu">People</span></a></li>
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="http://dreamvise.com/luna/src/luna/dashboard.html#" aria-expanded="false"><i class="mdi mdi-bell"></i><span class="hide-menu">Notifications</span></a></li>
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="http://dreamvise.com/luna/src/luna/camera.html" aria-expanded="false"><i class="mdi mdi-camera"></i><span class="hide-menu">Camera Devices</span></a></li>
+                        <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-file"></i><span class="hide-menu">Other Pages </span></a>
+                            <ul aria-expanded="false" class="collapse first-level">
+                                <li class="sidebar-item"><a href="http://dreamvise.com/luna/src/luna/login.html" class="sidebar-link"><i class="mdi mdi-crop-free"></i> <span class="hide-menu">Login</span></a></li>
+                                <li class="sidebar-item"><a href="http://dreamvise.com/luna/src/luna/register.html" class="sidebar-link"><i class="mdi mdi-debug-step-over"></i> <span class="hide-menu">Register</span></a></li>
+                                <li class="sidebar-item"><a href="http://dreamvise.com/luna/src/luna/search.html" class="sidebar-link"><i class="mdi mdi-debug-step-over"></i> <span class="hide-menu">Search</span></a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+                <!-- End Sidebar navigation -->
+            <div class="ps-scrollbar-x-rail" style="left: 0px; bottom: 0px;"><div class="ps-scrollbar-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps-scrollbar-y-rail" style="top: 0px; height: 0px; right: 3px;"><div class="ps-scrollbar-y" tabindex="0" style="top: 0px; height: 0px;"></div></div></div>
+            <!-- End Sidebar scroll-->
+        </aside>
+        <!-- ============================================================== -->
+        <!-- End Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Page wrapper  -->
+        <!-- ============================================================== -->
+        <div class="page-wrapper" style="display: block;">
+            <!-- ============================================================== -->
+            <!-- Container fluid  -->
+            <!-- ============================================================== -->
+            <div class="container-fluid">
+                <!-- Row -->
+                <div class="row">
+                    <div class="col-md-5 col-12 align-self-center mb-4">
+                        <h3 class="text-themecolor mb-0">Dashboard</h3>
+                    </div>
+                </div>
+                <!-- Row -->
+                <!-- Row -->
+                <div class="row">
+                    <!-- Column -->
+                    <div class="col-md-6 col-lg-3">
+                        <div class="card card-body">
+                            <!-- Row -->
+                            <div class="row">
+                                <!-- Column -->
+                                <div class="col pr-0 align-self-center">
+                                    <h2 class="fw-light mb-0">324</h2>
+                                    <h6 class="text-muted">New Registrations</h6>
+                                </div>
+                                <!-- Column -->
+                                <div class="col text-end align-self-center">
+                                    <div data-label="20%" class="css-bar mb-0 css-bar-info css-bar-20"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Column -->
+                    <div class="col-md-6 col-lg-3">
+                        <div class="card card-body">
+                            <!-- Row -->
+                            <div class="row">
+                                <!-- Column -->
+                                <div class="col pr-0 align-self-center">
+                                    <h2 class="fw-light mb-0">2376</h2>
+                                    <h6 class="text-muted">Total Person Captured</h6>
+                                </div>
+                                <!-- Column -->
+                                <div class="col text-end align-self-center">
+                                    <div data-label="30%" class="css-bar mb-0 css-bar-success css-bar-20"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Column -->
+                    <div class="col-md-6 col-lg-3">
+                        <div class="card card-body">
+                            <!-- Row -->
+                            <div class="row">
+                                <!-- Column -->
+                                <div class="col pr-0 align-self-center">
+                                    <h2 class="fw-light mb-0">1795</h2>
+                                    <h6 class="text-muted">New Named Person</h6>
+                                </div>
+                                <!-- Column -->
+                                <div class="col text-end ">
+                                    <div data-label="40%" class="css-bar mb-0 css-bar-primary css-bar-40"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Column -->
+                    <div class="col-md-6 col-lg-3">
+                        <div class="card card-body">
+                            <!-- Row -->
+                            <div class="row">
+                                <!-- Column -->
+                                <div class="col pr-0 align-self-center">
+                                    <h2 class="fw-light mb-0">36870</h2>
+                                    <h6 class="text-muted">New Unnamed Person</h6>
+                                </div>
+                                <!-- Column -->
+                                <div class="col text-end align-self-center">
+                                    <div data-label="60%" class="css-bar mb-0 css-bar-danger css-bar-60"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Row -->
+                <!-- Row -->
+                <div class="row">
+                    <!-- Column -->
+                    <div class="col-lg-4 col-md-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title m-0">Quick Tasks</h4>
+                            </div>
+                            <div><hr class="m-0"></div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-4 col-lg-6 col-xl-3">
+                                        <div class="p-2 d-block mt-3">
+                                            <img src="./Luna_files/import.png" width="55" class="rounded-circle img-fluid">
+                                            <p class="mt-3">Import Persons</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4 col-lg-6 col-xl-3">
+                                        <div class="p-2 d-block mt-3">
+                                            <img src="./Luna_files/person.png" width="55" class="rounded-circle img-fluid">
+                                            <p class="mt-3">Add Person</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4 col-lg-6 col-xl-3">
+                                        <div class="p-2 d-block mt-3">
+                                            <img src="./Luna_files/device.png" width="55" class="rounded-circle img-fluid">
+                                            <p class="mt-3">Add Device</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4 col-lg-6 col-xl-3">
+                                        <div class="p-2 d-block mt-3">
+                                            <img src="./Luna_files/configure.png" width="55" class="rounded-circle img-fluid">
+                                            <p class="mt-3">Configure</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Column -->
+                    <div class="col-lg-8 col-md-12">
+                        <div class="card">
+                                <div class="row">
+                                    <div class="card-body col-12">
+                                        <div class="d-flex flex-wrap">
+                                            <div>
+                                                <h3 class="m-0 card-title">Persons Overview</h3>
+                                            </div>
+                                            <div class="ms-auto">
+                                                <ul class="list-inline m-0">
+                                                    <li class="list-inline-item px-2">
+                                                        <h6 class="m-0 text-success"><i class="fa fa-circle font-10 me-2"></i>Named</h6>
+                                                    </li>
+                                                    <li class="list-inline-item px-2">
+                                                        <h6 class="m-0 text-info"><i class="fa fa-circle font-10 me-2"></i>Unnamed</h6>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div><hr class="m-0"></div>
+                                    <div class="card-body col-12" style="position: relative;">
+                                        <div id="sales-overview" style="min-height: 305px;"><div id="apexchartsqldy242r" class="apexcharts-canvas apexchartsqldy242r apexcharts-theme-light apexcharts-zoomable" style="width: 729px; height: 290px;"><svg id="SvgjsSvg1092" width="729" height="290" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" class="apexcharts-svg" xmlns:data="ApexChartsNS" transform="translate(0, 10)" style="background: transparent;"><g id="SvgjsG1094" class="apexcharts-inner apexcharts-graphical" transform="translate(93.9434375, 30)"><defs id="SvgjsDefs1093"><lineargradient id="SvgjsLinearGradient1098" x1="0" y1="0" x2="0" y2="1"><stop id="SvgjsStop1099" stop-opacity="0.4" stop-color="rgba(216,227,240,0.4)" offset="0"></stop><stop id="SvgjsStop1100" stop-opacity="0.5" stop-color="rgba(190,209,230,0.5)" offset="1"></stop><stop id="SvgjsStop1101" stop-opacity="0.5" stop-color="rgba(190,209,230,0.5)" offset="1"></stop></lineargradient><clippath id="gridRectMaskqldy242r"><rect id="SvgjsRect1103" width="689.7812499999999" height="221.494" x="-56.7246875" y="-2" rx="0" ry="0" opacity="1" stroke-width="0" stroke="none" stroke-dasharray="0" fill="#fff"></rect></clippath><clippath id="gridRectMarkerMaskqldy242r"><rect id="SvgjsRect1104" width="580.331875" height="221.494" x="-2" y="-2" rx="0" ry="0" opacity="1" stroke-width="0" stroke="none" stroke-dasharray="0" fill="#fff"></rect></clippath></defs><rect id="SvgjsRect1102" width="40.34323125" height="217.494" x="0" y="0" rx="0" ry="0" opacity="1" stroke-width="0" stroke-dasharray="3" fill="url(#SvgjsLinearGradient1098)" class="apexcharts-xcrosshairs" y2="217.494" filter="none" fill-opacity="0.9"></rect><g id="SvgjsG1122" class="apexcharts-xaxis" transform="translate(0, 0)"><g id="SvgjsG1123" class="apexcharts-xaxis-texts-g" transform="translate(0, -4)"><text id="SvgjsText1125" font-family="Poppins,sans-serif" x="0" y="246.494" text-anchor="middle" dominant-baseline="auto" font-size="12px" font-weight="400" fill="#a1aab2" class="apexcharts-text apexcharts-xaxis-label " style="font-family: Poppins, sans-serif;"><tspan id="SvgjsTspan1126">Mon</tspan><title>Mon</title></text><text id="SvgjsText1128" font-family="Poppins,sans-serif" x="115.26637500000001" y="246.494" text-anchor="middle" dominant-baseline="auto" font-size="12px" font-weight="400" fill="#a1aab2" class="apexcharts-text apexcharts-xaxis-label " style="font-family: Poppins, sans-serif;"><tspan id="SvgjsTspan1129">Tue</tspan><title>Tue</title></text><text id="SvgjsText1131" font-family="Poppins,sans-serif" x="230.53275" y="246.494" text-anchor="middle" dominant-baseline="auto" font-size="12px" font-weight="400" fill="#a1aab2" class="apexcharts-text apexcharts-xaxis-label " style="font-family: Poppins, sans-serif;"><tspan id="SvgjsTspan1132">Wed</tspan><title>Wed</title></text><text id="SvgjsText1134" font-family="Poppins,sans-serif" x="345.79912499999995" y="246.494" text-anchor="middle" dominant-baseline="auto" font-size="12px" font-weight="400" fill="#a1aab2" class="apexcharts-text apexcharts-xaxis-label " style="font-family: Poppins, sans-serif;"><tspan id="SvgjsTspan1135">Thu</tspan><title>Thu</title></text><text id="SvgjsText1137" font-family="Poppins,sans-serif" x="461.0655" y="246.494" text-anchor="middle" dominant-baseline="auto" font-size="12px" font-weight="400" fill="#a1aab2" class="apexcharts-text apexcharts-xaxis-label " style="font-family: Poppins, sans-serif;"><tspan id="SvgjsTspan1138">Fri</tspan><title>Fri</title></text><text id="SvgjsText1140" font-family="Poppins,sans-serif" x="576.3318750000001" y="246.494" text-anchor="middle" dominant-baseline="auto" font-size="12px" font-weight="400" fill="#a1aab2" class="apexcharts-text apexcharts-xaxis-label " style="font-family: Poppins, sans-serif;"><tspan id="SvgjsTspan1141">Sat</tspan><title>Sat</title></text></g><line id="SvgjsLine1142" x1="-52.7246875" y1="218.494" x2="629.0565624999999" y2="218.494" stroke="#e0e0e0" stroke-dasharray="0" stroke-width="1"></line></g><g id="SvgjsG1155" class="apexcharts-grid"><g id="SvgjsG1156" class="apexcharts-gridlines-horizontal"><line id="SvgjsLine1164" x1="-52.7246875" y1="0" x2="629.0565624999999" y2="0" stroke="rgba(0,0,0,.1)" stroke-dasharray="3" class="apexcharts-gridline"></line><line id="SvgjsLine1165" x1="-52.7246875" y1="54.3735" x2="629.0565624999999" y2="54.3735" stroke="rgba(0,0,0,.1)" stroke-dasharray="3" class="apexcharts-gridline"></line><line id="SvgjsLine1166" x1="-52.7246875" y1="108.747" x2="629.0565624999999" y2="108.747" stroke="rgba(0,0,0,.1)" stroke-dasharray="3" class="apexcharts-gridline"></line><line id="SvgjsLine1167" x1="-52.7246875" y1="163.1205" x2="629.0565624999999" y2="163.1205" stroke="rgba(0,0,0,.1)" stroke-dasharray="3" class="apexcharts-gridline"></line><line id="SvgjsLine1168" x1="-52.7246875" y1="217.494" x2="629.0565624999999" y2="217.494" stroke="rgba(0,0,0,.1)" stroke-dasharray="3" class="apexcharts-gridline"></line></g><g id="SvgjsG1157" class="apexcharts-gridlines-vertical"></g><line id="SvgjsLine1158" x1="0" y1="218.494" x2="0" y2="224.494" stroke="#e0e0e0" stroke-dasharray="0" class="apexcharts-xaxis-tick"></line><line id="SvgjsLine1159" x1="115.266375" y1="218.494" x2="115.266375" y2="224.494" stroke="#e0e0e0" stroke-dasharray="0" class="apexcharts-xaxis-tick"></line><line id="SvgjsLine1160" x1="230.53275" y1="218.494" x2="230.53275" y2="224.494" stroke="#e0e0e0" stroke-dasharray="0" class="apexcharts-xaxis-tick"></line><line id="SvgjsLine1161" x1="345.799125" y1="218.494" x2="345.799125" y2="224.494" stroke="#e0e0e0" stroke-dasharray="0" class="apexcharts-xaxis-tick"></line><line id="SvgjsLine1162" x1="461.0655" y1="218.494" x2="461.0655" y2="224.494" stroke="#e0e0e0" stroke-dasharray="0" class="apexcharts-xaxis-tick"></line><line id="SvgjsLine1163" x1="576.331875" y1="218.494" x2="576.331875" y2="224.494" stroke="#e0e0e0" stroke-dasharray="0" class="apexcharts-xaxis-tick"></line><line id="SvgjsLine1170" x1="0" y1="217.494" x2="576.331875" y2="217.494" stroke="transparent" stroke-dasharray="0"></line><line id="SvgjsLine1169" x1="0" y1="1" x2="0" y2="217.494" stroke="transparent" stroke-dasharray="0"></line></g><g id="SvgjsG1105" class="apexcharts-bar-series apexcharts-plot-series"><g id="SvgjsG1106" class="apexcharts-series" rel="1" seriesName="Pixelx" data:realIndex="0"><path id="SvgjsPath1108" d="M -40.34323125 217.494L -40.34323125 54.37350000000001L -4 54.37350000000001L -4 54.37350000000001L -4 217.494L -4 217.494z" fill="rgba(30,136,229,1)" fill-opacity="1" stroke="transparent" stroke-opacity="1" stroke-linecap="square" stroke-width="4" stroke-dasharray="0" class="apexcharts-bar-area" index="0" clip-path="url(#gridRectMaskqldy242r)" pathTo="M -40.34323125 217.494L -40.34323125 54.37350000000001L -4 54.37350000000001L -4 54.37350000000001L -4 217.494L -4 217.494z" pathFrom="M -40.34323125 217.494L -40.34323125 217.494L -4 217.494L -4 217.494L -4 217.494L -40.34323125 217.494" cy="54.37350000000001" cx="-2" j="0" val="9" barHeight="163.1205" barWidth="40.34323125"></path><path id="SvgjsPath1109" d="M 74.92314375 217.494L 74.92314375 126.8715L 111.266375 126.8715L 111.266375 126.8715L 111.266375 217.494L 111.266375 217.494z" fill="rgba(30,136,229,1)" fill-opacity="1" stroke="transparent" stroke-opacity="1" stroke-linecap="square" stroke-width="4" stroke-dasharray="0" class="apexcharts-bar-area" index="0" clip-path="url(#gridRectMaskqldy242r)" pathTo="M 74.92314375 217.494L 74.92314375 126.8715L 111.266375 126.8715L 111.266375 126.8715L 111.266375 217.494L 111.266375 217.494z" pathFrom="M 74.92314375 217.494L 74.92314375 217.494L 111.266375 217.494L 111.266375 217.494L 111.266375 217.494L 74.92314375 217.494" cy="126.8715" cx="113.266375" j="1" val="5" barHeight="90.6225" barWidth="40.34323125"></path><path id="SvgjsPath1110" d="M 190.18951875 217.494L 190.18951875 163.1205L 226.53275 163.1205L 226.53275 163.1205L 226.53275 217.494L 226.53275 217.494z" fill="rgba(30,136,229,1)" fill-opacity="1" stroke="transparent" stroke-opacity="1" stroke-linecap="square" stroke-width="4" stroke-dasharray="0" class="apexcharts-bar-area" index="0" clip-path="url(#gridRectMaskqldy242r)" pathTo="M 190.18951875 217.494L 190.18951875 163.1205L 226.53275 163.1205L 226.53275 163.1205L 226.53275 217.494L 226.53275 217.494z" pathFrom="M 190.18951875 217.494L 190.18951875 217.494L 226.53275 217.494L 226.53275 217.494L 226.53275 217.494L 190.18951875 217.494" cy="163.1205" cx="228.53275" j="2" val="3" barHeight="54.3735" barWidth="40.34323125"></path><path id="SvgjsPath1111" d="M 305.45589375 217.494L 305.45589375 90.6225L 341.799125 90.6225L 341.799125 90.6225L 341.799125 217.494L 341.799125 217.494z" fill="rgba(30,136,229,1)" fill-opacity="1" stroke="transparent" stroke-opacity="1" stroke-linecap="square" stroke-width="4" stroke-dasharray="0" class="apexcharts-bar-area" index="0" clip-path="url(#gridRectMaskqldy242r)" pathTo="M 305.45589375 217.494L 305.45589375 90.6225L 341.799125 90.6225L 341.799125 90.6225L 341.799125 217.494L 341.799125 217.494z" pathFrom="M 305.45589375 217.494L 305.45589375 217.494L 341.799125 217.494L 341.799125 217.494L 341.799125 217.494L 305.45589375 217.494" cy="90.6225" cx="343.799125" j="3" val="7" barHeight="126.8715" barWidth="40.34323125"></path><path id="SvgjsPath1112" d="M 420.72226875 217.494L 420.72226875 126.8715L 457.06550000000004 126.8715L 457.06550000000004 126.8715L 457.06550000000004 217.494L 457.06550000000004 217.494z" fill="rgba(30,136,229,1)" fill-opacity="1" stroke="transparent" stroke-opacity="1" stroke-linecap="square" stroke-width="4" stroke-dasharray="0" class="apexcharts-bar-area" index="0" clip-path="url(#gridRectMaskqldy242r)" pathTo="M 420.72226875 217.494L 420.72226875 126.8715L 457.06550000000004 126.8715L 457.06550000000004 126.8715L 457.06550000000004 217.494L 457.06550000000004 217.494z" pathFrom="M 420.72226875 217.494L 420.72226875 217.494L 457.06550000000004 217.494L 457.06550000000004 217.494L 457.06550000000004 217.494L 420.72226875 217.494" cy="126.8715" cx="459.06550000000004" j="4" val="5" barHeight="90.6225" barWidth="40.34323125"></path><path id="SvgjsPath1113" d="M 535.9886437499999 217.494L 535.9886437499999 36.248999999999995L 572.331875 36.248999999999995L 572.331875 36.248999999999995L 572.331875 217.494L 572.331875 217.494z" fill="rgba(30,136,229,1)" fill-opacity="1" stroke="transparent" stroke-opacity="1" stroke-linecap="square" stroke-width="4" stroke-dasharray="0" class="apexcharts-bar-area" index="0" clip-path="url(#gridRectMaskqldy242r)" pathTo="M 535.9886437499999 217.494L 535.9886437499999 36.248999999999995L 572.331875 36.248999999999995L 572.331875 36.248999999999995L 572.331875 217.494L 572.331875 217.494z" pathFrom="M 535.9886437499999 217.494L 535.9886437499999 217.494L 572.331875 217.494L 572.331875 217.494L 572.331875 217.494L 535.9886437499999 217.494" cy="36.248999999999995" cx="574.331875" j="5" val="10" barHeight="181.245" barWidth="40.34323125"></path></g><g id="SvgjsG1114" class="apexcharts-series" rel="2" seriesName="Amplex" data:realIndex="1"><path id="SvgjsPath1116" d="M 0 217.494L 0 108.747L 36.34323125 108.747L 36.34323125 108.747L 36.34323125 217.494L 36.34323125 217.494z" fill="rgba(33,193,214,1)" fill-opacity="1" stroke="transparent" stroke-opacity="1" stroke-linecap="square" stroke-width="4" stroke-dasharray="0" class="apexcharts-bar-area" index="1" clip-path="url(#gridRectMaskqldy242r)" pathTo="M 0 217.494L 0 108.747L 36.34323125 108.747L 36.34323125 108.747L 36.34323125 217.494L 36.34323125 217.494z" pathFrom="M 0 217.494L 0 217.494L 36.34323125 217.494L 36.34323125 217.494L 36.34323125 217.494L 0 217.494" cy="108.747" cx="38.34323125" j="0" val="6" barHeight="108.747" barWidth="40.34323125"></path><path id="SvgjsPath1117" d="M 115.266375 217.494L 115.266375 163.1205L 151.60960625 163.1205L 151.60960625 163.1205L 151.60960625 217.494L 151.60960625 217.494z" fill="rgba(33,193,214,1)" fill-opacity="1" stroke="transparent" stroke-opacity="1" stroke-linecap="square" stroke-width="4" stroke-dasharray="0" class="apexcharts-bar-area" index="1" clip-path="url(#gridRectMaskqldy242r)" pathTo="M 115.266375 217.494L 115.266375 163.1205L 151.60960625 163.1205L 151.60960625 163.1205L 151.60960625 217.494L 151.60960625 217.494z" pathFrom="M 115.266375 217.494L 115.266375 217.494L 151.60960625 217.494L 151.60960625 217.494L 151.60960625 217.494L 115.266375 217.494" cy="163.1205" cx="153.60960625" j="1" val="3" barHeight="54.3735" barWidth="40.34323125"></path><path id="SvgjsPath1118" d="M 230.53275 217.494L 230.53275 54.37350000000001L 266.87598125 54.37350000000001L 266.87598125 54.37350000000001L 266.87598125 217.494L 266.87598125 217.494z" fill="rgba(33,193,214,1)" fill-opacity="1" stroke="transparent" stroke-opacity="1" stroke-linecap="square" stroke-width="4" stroke-dasharray="0" class="apexcharts-bar-area" index="1" clip-path="url(#gridRectMaskqldy242r)" pathTo="M 230.53275 217.494L 230.53275 54.37350000000001L 266.87598125 54.37350000000001L 266.87598125 54.37350000000001L 266.87598125 217.494L 266.87598125 217.494z" pathFrom="M 230.53275 217.494L 230.53275 217.494L 266.87598125 217.494L 266.87598125 217.494L 266.87598125 217.494L 230.53275 217.494" cy="54.37350000000001" cx="268.87598125" j="2" val="9" barHeight="163.1205" barWidth="40.34323125"></path><path id="SvgjsPath1119" d="M 345.799125 217.494L 345.799125 126.8715L 382.14235625000003 126.8715L 382.14235625000003 126.8715L 382.14235625000003 217.494L 382.14235625000003 217.494z" fill="rgba(33,193,214,1)" fill-opacity="1" stroke="transparent" stroke-opacity="1" stroke-linecap="square" stroke-width="4" stroke-dasharray="0" class="apexcharts-bar-area" index="1" clip-path="url(#gridRectMaskqldy242r)" pathTo="M 345.799125 217.494L 345.799125 126.8715L 382.14235625000003 126.8715L 382.14235625000003 126.8715L 382.14235625000003 217.494L 382.14235625000003 217.494z" pathFrom="M 345.799125 217.494L 345.799125 217.494L 382.14235625000003 217.494L 382.14235625000003 217.494L 382.14235625000003 217.494L 345.799125 217.494" cy="126.8715" cx="384.14235625" j="3" val="5" barHeight="90.6225" barWidth="40.34323125"></path><path id="SvgjsPath1120" d="M 461.06550000000004 217.494L 461.06550000000004 144.99599999999998L 497.4087312500001 144.99599999999998L 497.4087312500001 144.99599999999998L 497.4087312500001 217.494L 497.4087312500001 217.494z" fill="rgba(33,193,214,1)" fill-opacity="1" stroke="transparent" stroke-opacity="1" stroke-linecap="square" stroke-width="4" stroke-dasharray="0" class="apexcharts-bar-area" index="1" clip-path="url(#gridRectMaskqldy242r)" pathTo="M 461.06550000000004 217.494L 461.06550000000004 144.99599999999998L 497.4087312500001 144.99599999999998L 497.4087312500001 144.99599999999998L 497.4087312500001 217.494L 497.4087312500001 217.494z" pathFrom="M 461.06550000000004 217.494L 461.06550000000004 217.494L 497.4087312500001 217.494L 497.4087312500001 217.494L 497.4087312500001 217.494L 461.06550000000004 217.494" cy="144.99599999999998" cx="499.40873125" j="4" val="4" barHeight="72.498" barWidth="40.34323125"></path><path id="SvgjsPath1121" d="M 576.331875 217.494L 576.331875 108.747L 612.67510625 108.747L 612.67510625 108.747L 612.67510625 217.494L 612.67510625 217.494z" fill="rgba(33,193,214,1)" fill-opacity="1" stroke="transparent" stroke-opacity="1" stroke-linecap="square" stroke-width="4" stroke-dasharray="0" class="apexcharts-bar-area" index="1" clip-path="url(#gridRectMaskqldy242r)" pathTo="M 576.331875 217.494L 576.331875 108.747L 612.67510625 108.747L 612.67510625 108.747L 612.67510625 217.494L 612.67510625 217.494z" pathFrom="M 576.331875 217.494L 576.331875 217.494L 612.67510625 217.494L 612.67510625 217.494L 612.67510625 217.494L 576.331875 217.494" cy="108.747" cx="614.67510625" j="5" val="6" barHeight="108.747" barWidth="40.34323125"></path><g id="SvgjsG1115" class="apexcharts-datalabels" data:realIndex="1"></g></g><g id="SvgjsG1107" class="apexcharts-datalabels" data:realIndex="0"></g></g><line id="SvgjsLine1171" x1="-52.7246875" y1="0" x2="629.0565624999999" y2="0" stroke="#b6b6b6" stroke-dasharray="0" stroke-width="1" class="apexcharts-ycrosshairs"></line><line id="SvgjsLine1172" x1="-52.7246875" y1="0" x2="629.0565624999999" y2="0" stroke-dasharray="0" stroke-width="0" class="apexcharts-ycrosshairs-hidden"></line><g id="SvgjsG1173" class="apexcharts-yaxis-annotations"></g><g id="SvgjsG1174" class="apexcharts-xaxis-annotations"></g><g id="SvgjsG1175" class="apexcharts-point-annotations"></g><rect id="SvgjsRect1176" width="0" height="0" x="0" y="0" rx="0" ry="0" opacity="1" stroke-width="0" stroke="none" stroke-dasharray="0" fill="#fefefe" class="apexcharts-zoom-rect"></rect><rect id="SvgjsRect1177" width="0" height="0" x="0" y="0" rx="0" ry="0" opacity="1" stroke-width="0" stroke="none" stroke-dasharray="0" fill="#fefefe" class="apexcharts-selection-rect"></rect></g><g id="SvgjsG1143" class="apexcharts-yaxis" rel="0" transform="translate(7.21875, 0)"><g id="SvgjsG1144" class="apexcharts-yaxis-texts-g"><text id="SvgjsText1145" font-family="Poppins,sans-serif" x="20" y="31.4" text-anchor="end" dominant-baseline="auto" font-size="11px" font-weight="400" fill="#a1aab2" class="apexcharts-text apexcharts-yaxis-label " style="font-family: Poppins, sans-serif;"><tspan id="SvgjsTspan1146">12</tspan></text><text id="SvgjsText1147" font-family="Poppins,sans-serif" x="20" y="85.77350000000001" text-anchor="end" dominant-baseline="auto" font-size="11px" font-weight="400" fill="#a1aab2" class="apexcharts-text apexcharts-yaxis-label " style="font-family: Poppins, sans-serif;"><tspan id="SvgjsTspan1148">9</tspan></text><text id="SvgjsText1149" font-family="Poppins,sans-serif" x="20" y="140.14700000000002" text-anchor="end" dominant-baseline="auto" font-size="11px" font-weight="400" fill="#a1aab2" class="apexcharts-text apexcharts-yaxis-label " style="font-family: Poppins, sans-serif;"><tspan id="SvgjsTspan1150">6</tspan></text><text id="SvgjsText1151" font-family="Poppins,sans-serif" x="20" y="194.52050000000003" text-anchor="end" dominant-baseline="auto" font-size="11px" font-weight="400" fill="#a1aab2" class="apexcharts-text apexcharts-yaxis-label " style="font-family: Poppins, sans-serif;"><tspan id="SvgjsTspan1152">3</tspan></text><text id="SvgjsText1153" font-family="Poppins,sans-serif" x="20" y="248.89400000000003" text-anchor="end" dominant-baseline="auto" font-size="11px" font-weight="400" fill="#a1aab2" class="apexcharts-text apexcharts-yaxis-label " style="font-family: Poppins, sans-serif;"><tspan id="SvgjsTspan1154">0</tspan></text></g></g><g id="SvgjsG1095" class="apexcharts-annotations"></g></svg><div class="apexcharts-legend"></div><div class="apexcharts-tooltip apexcharts-theme-dark"><div class="apexcharts-tooltip-title" style="font-family: Poppins, sans-serif; font-size: 12px;"></div><div class="apexcharts-tooltip-series-group"><span class="apexcharts-tooltip-marker" style="background-color: rgb(30, 136, 229);"></span><div class="apexcharts-tooltip-text" style="font-family: Poppins, sans-serif; font-size: 12px;"><div class="apexcharts-tooltip-y-group"><span class="apexcharts-tooltip-text-label"></span><span class="apexcharts-tooltip-text-value"></span></div><div class="apexcharts-tooltip-z-group"><span class="apexcharts-tooltip-text-z-label"></span><span class="apexcharts-tooltip-text-z-value"></span></div></div></div><div class="apexcharts-tooltip-series-group"><span class="apexcharts-tooltip-marker" style="background-color: rgb(33, 193, 214);"></span><div class="apexcharts-tooltip-text" style="font-family: Poppins, sans-serif; font-size: 12px;"><div class="apexcharts-tooltip-y-group"><span class="apexcharts-tooltip-text-label"></span><span class="apexcharts-tooltip-text-value"></span></div><div class="apexcharts-tooltip-z-group"><span class="apexcharts-tooltip-text-z-label"></span><span class="apexcharts-tooltip-text-z-value"></span></div></div></div></div><div class="apexcharts-yaxistooltip apexcharts-yaxistooltip-0 apexcharts-yaxistooltip-left apexcharts-theme-dark"><div class="apexcharts-yaxistooltip-text"></div></div></div></div>
+                                    <div class="resize-triggers"><div class="expand-trigger"><div style="width: 770px; height: 346px;"></div></div><div class="contract-trigger"></div></div></div>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Container fluid  -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- footer -->
+            <!-- ============================================================== -->
+            <footer class="footer">
+                Powered by Vergent Technology Solutions
+            </footer>
+            <!-- ============================================================== -->
+            <!-- End footer -->
+            <!-- ============================================================== -->
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Page wrapper  -->
+        <!-- ============================================================== -->
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Wrapper -->
+    <!-- ============================================================== -->
+
+    <!-- ============================================================== -->
+    <!-- All Jquery -->
+    <!-- ============================================================== -->
+    <script src="./Luna_files/jquery.min.js.download"></script>
+    <!-- Bootstrap tether Core JavaScript -->
+    <script src="./Luna_files/bootstrap.bundle.min.js.download"></script>
+    <!-- apps -->
+    <script src="./Luna_files/app.min.js.download"></script>
+    <script src="./Luna_files/app.init.js.download"></script>
+    <script src="./Luna_files/app-style-switcher.js.download"></script>
+    <!-- slimscrollbar scrollbar JavaScript -->
+    <script src="./Luna_files/perfect-scrollbar.jquery.min.js.download"></script>
+    <script src="./Luna_files/sparkline.js.download"></script>
+    <!--Wave Effects -->
+    <script src="./Luna_files/waves.js.download"></script>
+    <!--Menu sidebar -->
+    <script src="./Luna_files/sidebarmenu.js.download"></script>
+    <!--Custom JavaScript -->
+    <script src="./Luna_files/feather.min.js.download"></script>
+    <script src="./Luna_files/custom.min.js.download"></script>
+    <!--This page JavaScript -->
+    <script src="./Luna_files/apexcharts.min.js.download"></script>
+    <!-- Vector map JavaScript -->
+    <script src="./Luna_files/jquery-jvectormap.min.js.download"></script>
+    <script src="./Luna_files/jquery-jvectormap-us-aea-en.js.download"></script>
+    <!-- Chart JS -->
+    <script src="./Luna_files/dashboard3.js.download"></script>
+
+
+<svg id="SvgjsSvg1001" width="2" height="0" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" style="overflow: hidden; top: -100%; left: -100%; position: absolute; opacity: 0;"><defs id="SvgjsDefs1002"></defs><polyline id="SvgjsPolyline1003" points="0,0"></polyline><path id="SvgjsPath1004" d="M0 0 "></path></svg><div class="jvectormap-tip"></div></body></html>
